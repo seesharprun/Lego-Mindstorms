@@ -2,6 +2,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Title>Lego.Mindstorms</Title>
+    <Description>
+    .NET Standard library to connect to Mindstorms bricks.
+
+    Lego image by Pham Duy Phuong Hung from the Noun Project
+    </Description>
+    <Authors>seesharprun</Authors>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIconUrl>lego.png</PackageIconUrl>
+    <PackageTags>lego;mindstorms</PackageTags>
+    <RepositoryUrl>https://github.com/seesharprun/Lego-Mindstorms</RepositoryUrl>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.IO.Ports" Version="4.5.0" />
     <PackageReference Include="System.Runtime.InteropServices.WindowsRuntime" Version="4.3.0" />
