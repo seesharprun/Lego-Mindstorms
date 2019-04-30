@@ -8,8 +8,13 @@ steps:
       command: 'pack Lego.Mindstorms/Lego.Mindstorms.csproj'
       arguments: '-p:PackageVersion=$(Build.BuildNumber)'      
       packDirectory: '$(Build.ArtifactStagingDirectory)/nupkg'
+  - task: DotNetCoreCLI@2
+    displayName: 'Push Library'
+    inputs:
+      command: 'nuget push $(Build.ArtifactStagingDirectory)/nupkg/*.nupkg'
+      arguments: '--api-key $(nugetApiKey)'
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Package'
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)/nupkg'
-      artifactName: 'NuGet Packages'
+      artifactName: 'NuGet Package'
