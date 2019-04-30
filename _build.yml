@@ -1,4 +1,4 @@
-name: '2.0.$(Rev:rr)'
+name: '2.1.$(Rev:rr)'
 pool:
   vmImage: 'Ubuntu-16.04'
 steps:

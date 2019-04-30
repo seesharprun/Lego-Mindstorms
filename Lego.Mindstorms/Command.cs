@@ -17,7 +17,7 @@ namespace Lego.Mindstorms
 
 		internal Response Response { get; set; }
 
-		internal Command() : this(CommandType.DirectNoReply)
+		public Command() : this(CommandType.DirectNoReply)
 		{ }
 
 		internal Command(CommandType commandType) : this(commandType, 0, 0)
