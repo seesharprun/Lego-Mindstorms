@@ -12,7 +12,7 @@ Source code is in the **/Lego.Mindstorms** directory. A sample console project i
 
 - .NET Core 2.2 or later [dot.net](https://dotnet.microsoft.com/)
 
-### Getting started
+### Quick start
 
 1. Clone this repository in an empty directory:
 
@@ -20,12 +20,12 @@ Source code is in the **/Lego.Mindstorms** directory. A sample console project i
     git clone https://github.com/seesharprun/Lego-Mindstorms .
     ```
 
-1. Connect your brick to your computer using a USB cable.
+1. Connect your brick to your computer using a USB cable. For the test client, connect a large or small motor to **Port A**.
 
 1. Use the .NET CLI to execute the test project:
 
     ```
-    dotnet run
+    dotnet run --project Lego.Mindstorms.Client/Lego.Mindstorms.Client.csproj
     ```
 
 ## Short-term goals (v1.0)

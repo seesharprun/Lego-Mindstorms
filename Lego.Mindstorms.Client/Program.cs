@@ -18,7 +18,7 @@ namespace Lego.Mindstorms.Client
             await brick.ConnectAsync();
 
             Console.WriteLine("Connected...Turning motor...");
-            await brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B, 50, 3000u, false);
+            await brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.A, 50, 3000u, false);
 
             System.Console.WriteLine("Motor turned...beeping...");
             await brick.DirectCommand.PlayToneAsync(50, 5000, 500);
