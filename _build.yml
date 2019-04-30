@@ -5,14 +5,10 @@ steps:
   - task: DotNetCoreCLI@2
     displayName: 'Package Library'
     inputs:
-      command: 'pack Lego.Mindstorms/Lego.Mindstorms.csproj'
-      arguments: '-p:PackageVersion=$(Build.BuildNumber)'      
+      command: 'pack'
+      packagesToPack: 'Lego.Mindstorms/Lego.Mindstorms.csproj'
       packDirectory: '$(Build.ArtifactStagingDirectory)/nupkg'
-  - task: DotNetCoreCLI@2
-    displayName: 'Push Library'
-    inputs:
-      command: 'nuget push $(Build.ArtifactStagingDirectory)/nupkg/*.nupkg'
-      arguments: '--api-key $(nugetApiKey)'
+      versioningScheme: byBuildNumber
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Package'
     inputs:
