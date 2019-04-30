@@ -9,6 +9,12 @@ steps:
       packagesToPack: 'Lego.Mindstorms/Lego.Mindstorms.csproj'
       packDirectory: '$(Build.ArtifactStagingDirectory)/nupkg'
       versioningScheme: byBuildNumber
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'push'
+      nuGetFeedType: external
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/nupkg/*.nupkg'
+      publishFeedCredentials: nugetConnection
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Package'
     inputs:
