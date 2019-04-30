@@ -10,8 +10,8 @@ namespace Lego.Mindstorms
 	/// <summary>
 	/// Communicate with EV3 brick over TCP
 	/// </summary>
-	public class NetworkCommunication : ICommunication
-	{
+	public class NetworkCommunication : ICommunication, IDisposable
+    {
 		/// <summary>
 		/// Event fired when a complete report is received from the EV3 brick.
 		/// </summary>
@@ -81,7 +81,7 @@ namespace Lego.Mindstorms
 		/// <summary>
 		/// Disconnect from the EV3 brick.
 		/// </summary>
-		public void Disconnect()
+		public void Dispose()
 		{
 			_client.Close();
 		}

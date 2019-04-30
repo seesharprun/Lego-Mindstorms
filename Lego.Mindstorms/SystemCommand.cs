@@ -5,18 +5,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Lego.Mindstorms
 {
-	/// <summary>
-	/// Direct commands for the EV3 brick
-	/// </summary>
-	public sealed class SystemCommand
-	{
-		private readonly Brick _brick;
-
-		internal SystemCommand(Brick brick)
-		{
-			_brick = brick;
-		}
-
+    /// <summary>
+    /// Direct commands for the EV3 brick
+    /// </summary>
+    public sealed partial class MindstormsClient<T> : IDisposable where T : ICommunication, IDisposable
+    {
 		/// <summary>
 		/// Write a file to the EV3 brick
 		/// </summary>
@@ -68,7 +61,7 @@ namespace Lego.Mindstorms
 			Response r = ResponseManager.CreateResponse();
 			Command c = new Command(CommandType.SystemReply);
 			c.DeleteFile(devicePath);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			if(r.SystemReplyStatus != SystemReplyStatus.Success)
 				throw new Exception("Error deleting file: " + r.SystemReplyStatus);
 		}
@@ -78,7 +71,7 @@ namespace Lego.Mindstorms
 			Response r = ResponseManager.CreateResponse();
 			Command c = new Command(CommandType.SystemReply);
 			c.CreateDirectory(devicePath);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			if(r.SystemReplyStatus != SystemReplyStatus.Success)
 				throw new Exception("Error creating directory: " + r.SystemReplyStatus);
 		}
@@ -98,7 +91,7 @@ namespace Lego.Mindstorms
 			commandBegin.AddRawParameter((uint)data.Length);
 			commandBegin.AddRawParameter(devicePath);
 
-			await _brick.SendCommandAsyncInternal(commandBegin);
+			await SendCommandAsyncInternal(commandBegin);
 			if(commandBegin.Response.SystemReplyStatus != SystemReplyStatus.Success)
 				throw new Exception("Could not begin file save: " + commandBegin.Response.SystemReplyStatus);
 
@@ -114,7 +107,7 @@ namespace Lego.Mindstorms
 				commandContinue.AddRawParameter(data, sizeSent, sizeToSend);
 				sizeSent += sizeToSend;
 
-				await _brick.SendCommandAsyncInternal(commandContinue);
+				await SendCommandAsyncInternal(commandContinue);
 				if(commandContinue.Response.SystemReplyStatus != SystemReplyStatus.Success &&
 					(commandContinue.Response.SystemReplyStatus != SystemReplyStatus.EndOfFile && sizeSent == data.Length))
 					throw new Exception("Error saving file: " + commandContinue.Response.SystemReplyStatus);
@@ -123,7 +116,7 @@ namespace Lego.Mindstorms
 			//Command commandClose = new Command(CommandType.SystemReply);
 			//commandClose.AddOpcode(SystemOpcode.CloseFileHandle);
 			//commandClose.AddRawParameter(handle);
-			//await _brick.SendCommandAsyncInternal(commandClose);
+			//await SendCommandAsyncInternal(commandClose);
 			//if(commandClose.Response.SystemReplyStatus != SystemReplyStatus.Success)
 			//	throw new Exception("Could not close handle: " + commandClose.Response.SystemReplyStatus);
 		}

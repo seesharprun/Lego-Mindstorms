@@ -4,18 +4,11 @@ using System.Threading.Tasks;
 
 namespace Lego.Mindstorms
 {
-	/// <summary>
-	/// Direct commands for the EV3 brick
-	/// </summary>
-	public sealed class DirectCommand
-	{
-		private readonly Brick _brick;
-
-		internal DirectCommand(Brick brick)
-		{
-			_brick = brick;
-		}
-
+    /// <summary>
+    /// Direct commands for the EV3 brick
+    /// </summary>
+    public sealed partial class MindstormsClient<T> : IDisposable where T : ICommunication, IDisposable
+    {
 		/// <summary>
 		/// Turn the motor connected to the specified port or ports at the specified power.
 		/// </summary>
@@ -517,7 +510,7 @@ namespace Lego.Mindstorms
 			Command c = new Command(CommandType.DirectNoReply);
 			c.TurnMotorAtPower(ports, power);
 			c.StartMotor(ports);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task TurnMotorAtSpeedAsyncInternal(OutputPort ports, int speed)
@@ -525,14 +518,14 @@ namespace Lego.Mindstorms
 			Command c = new Command(CommandType.DirectNoReply);
 			c.TurnMotorAtSpeed(ports, speed);
 			c.StartMotor(ports);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task StepMotorAtPowerAsyncInternal(OutputPort ports, int power, uint rampUpSteps, uint constantSteps, uint rampDownSteps, bool brake)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.StepMotorAtPower(ports, power, rampUpSteps, constantSteps, rampDownSteps, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 
@@ -540,91 +533,91 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.StepMotorAtSpeed(ports, speed, rampUpSteps, constantSteps, rampDownSteps, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task TurnMotorAtPowerForTimeAsyncInternal(OutputPort ports, int power, uint msRampUp, uint msConstant, uint msRampDown, bool brake)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.TurnMotorAtPowerForTime(ports, power, msRampUp, msConstant, msRampDown, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task TurnMotorAtSpeedForTimeAsyncInternal(OutputPort ports, int speed, uint msRampUp, uint msConstant, uint msRampDown, bool brake)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.TurnMotorAtSpeedForTime(ports, speed, msRampUp, msConstant, msRampDown, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task SetMotorPolarityAsyncInternal(OutputPort ports, Polarity polarity)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.SetMotorPolarity(ports, polarity);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task StopMotorAsyncInternal(OutputPort ports, bool brake)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.StopMotor(ports, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task StartMotorAsyncInternal(OutputPort ports)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.StartMotor(ports);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task StepMotorSyncAsyncInternal(OutputPort ports, int speed, short turnRatio, uint step, bool brake)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.StepMotorSync(ports, speed, turnRatio, step, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task TimeMotorSyncAsyncInternal(OutputPort ports, int speed, short turnRatio, uint step, bool brake)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.TimeMotorSync(ports, speed, turnRatio, step, brake);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task ClearAllDevicesAsyncInternal()
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.ClearAllDevices();
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task ClearChangesAsyncInternal(InputPort port)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.ClearChanges(port);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task PlayToneAsyncInternal(int volume, ushort frequency, ushort duration)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.PlayTone(volume, frequency, duration);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task PlaySoundAsyncInternal(int volume, string filename)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.PlaySound(volume, filename);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task<string> GetFirmwareVersionAsyncInternal()
 		{
 			Command c = new Command(CommandType.DirectReply, 0x10, 0);
 			c.GetFirwmareVersion(0x10, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			if(c.Response.Data == null)
 				return null;
 
@@ -636,7 +629,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectReply, 1, 0);
 			c.IsBrickButtonPressed(button, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			return false;
 		}
 
@@ -644,105 +637,105 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.SetLedPattern(ledPattern);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task CleanUIAsyncInternal()
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.CleanUI();
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawLineAsyncInternal(Color color, ushort x0, ushort y0, ushort x1, ushort y1)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawLine(color, x0, y0, x1, y1);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawPixelAsyncInternal(Color color, ushort x, ushort y)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawPixel(color, x, y);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawRectangleAsyncInternal(Color color, ushort x, ushort y, ushort width, ushort height, bool filled)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawRectangle(color, x, y, width, height, filled);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawInverseRectangleAsyncInternal(ushort x, ushort y, ushort width, ushort height)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawInverseRectangle(x, y, width, height);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawCircleAsyncInternal(Color color, ushort x, ushort y, ushort radius, bool filled)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawCircle(color, x, y, radius, filled);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawTextAsyncInternal(Color color, ushort x, ushort y, string text)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawText(color, x, y, text);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawFillWindowAsyncInternal(Color color, ushort y0, ushort y1)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawFillWindow(color, y0, y1);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawImageAsyncInternal(Color color, ushort x, ushort y, string devicePath)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawImage(color, x ,y, devicePath);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task SelectFontAsyncInternal(FontType fontType)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.SelectFont(fontType);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task EnableTopLineAsyncInternal(bool enabled)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.EnableTopLine(enabled);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task DrawDottedLineAsyncInternal(Color color, ushort x0, ushort y0, ushort x1, ushort y1, ushort onPixels, ushort offPixels)
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.DrawDottedLine(color, x0, y0, x1, y1, onPixels, offPixels);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task UpdateUIAsyncInternal()
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.UpdateUI();
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 
 		internal async Task<byte[]> GetTypeModeAsyncInternal(InputPort port)
 		{
 			Command c = new Command(CommandType.DirectReply, 2, 0);
 			c.GetTypeMode(port, 0, 1);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			return c.Response.Data;
 		}
 
@@ -750,7 +743,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectReply, 4, 0);
 			c.ReadySI(port, mode, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			return BitConverter.ToSingle(c.Response.Data, 0);
 		}
 
@@ -758,7 +751,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectReply, 4, 0);
 			c.ReadyRaw(port, mode, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			return BitConverter.ToInt32(c.Response.Data, 0);
 		}
 
@@ -766,7 +759,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectReply, 1, 0);
 			c.ReadyRaw(port, mode, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			return c.Response.Data[0];
 		}
 
@@ -774,7 +767,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectReply, 0x7f, 0);
 			c.GetDeviceName(port, 0x7f, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			int index = Array.IndexOf(c.Response.Data, (byte)0);
 			return Encoding.UTF8.GetString(c.Response.Data, 0, index);
 		}
@@ -783,7 +776,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectReply, 0x7f, 0);
 			c.GetModeName(port, mode, 0x7f, 0);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 			int index = Array.IndexOf(c.Response.Data, (byte)0);
 			return Encoding.UTF8.GetString(c.Response.Data, 0, index);
 		}
@@ -792,7 +785,7 @@ namespace Lego.Mindstorms
 		{
 			Command c = new Command(CommandType.DirectNoReply);
 			c.OutputReady(ports);
-			await _brick.SendCommandAsyncInternal(c);
+			await SendCommandAsyncInternal(c);
 		}
 	}
 }

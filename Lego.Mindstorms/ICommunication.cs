@@ -20,11 +20,6 @@ namespace Lego.Mindstorms
         Task ConnectAsync();
 
 		/// <summary>
-		/// Disconnect from the EV3 brick.
-		/// </summary>
-		void Disconnect();
-
-		/// <summary>
 		/// Write a report to the EV3 brick.
 		/// </summary>
 		/// <param name="data"></param>

@@ -5,27 +5,23 @@ using System.Threading.Tasks;
 
 namespace Lego.Mindstorms
 {
-	/// <summary>
-	/// Command or chain of commands to be written to the EV3 brick
-	/// </summary>
-	public sealed class Command
-	{
+    /// <summary>
+    /// Command or chain of commands to be written to the EV3 brick
+    /// </summary>
+    public sealed class Command
+    {
 		private BinaryWriter _writer;
 		private MemoryStream _stream;
-		private readonly Brick _brick;
 
 		internal CommandType CommandType { get; set; }
 
 		internal Response Response { get; set; }
 
-		internal Command(Brick brick) : this(CommandType.DirectNoReply)
-		{
-			_brick = brick;
-		}
+		internal Command() : this(CommandType.DirectNoReply)
+		{ }
 
 		internal Command(CommandType commandType) : this(commandType, 0, 0)
-		{
-		}
+		{ }
 
 		internal Command(CommandType commandType, ushort globalSize, int localSize)
 		{
@@ -875,18 +871,6 @@ namespace Lego.Mindstorms
 			AddOpcode(Opcode.OutputReady);
 			AddParameter(0x00);			// layer
 			AddParameter((byte)ports);	// ports
-		}
-
-		/// <summary>
-		/// End and send a Command to the EV3 brick.
-		/// </summary>
-		/// <returns>A byte array containing the response from the brick, if any.</returns>
-		public async Task<byte[]> SendCommandAsync()
-		{
-			await _brick.SendCommandAsyncInternal(this);
-			byte[] response = Response.Data;
-			Initialize(CommandType.DirectNoReply);
-			return response;
 		}
 	}
 }

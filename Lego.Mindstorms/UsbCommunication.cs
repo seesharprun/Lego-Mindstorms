@@ -12,7 +12,7 @@ namespace Lego.Mindstorms
 	/// <summary>
 	/// Communicate with EV3 brick over USB HID.
 	/// </summary>
-	public class UsbCommunication : ICommunication
+	public class UsbCommunication : ICommunication, IDisposable
 	{
 		/// <summary>
 		/// Event fired when a complete report is received from the EV3 brick.
@@ -73,7 +73,7 @@ namespace Lego.Mindstorms
 		/// <summary>
 		/// Disconnect from the EV3 brick.
 		/// </summary>
-		public void Disconnect()
+		public void Dispose()
 		{
 			// close up the stream and handle
 			if(_stream != null)

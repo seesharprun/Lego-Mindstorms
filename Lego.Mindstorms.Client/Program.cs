@@ -1,29 +1,28 @@
-﻿using System;
+﻿using Lego.Mindstorms;
+using System;
 using System.Threading.Tasks;
 
-namespace Lego.Mindstorms.Client
+public class Program
 {
-    public class Program
+    public static async Task Main(string[] args)
     {
-        public static async Task Main(string[] args)
+        Console.WriteLine("Opening connection to Mindstorms EV3 brick using USB...");
+
+        //using (BluetoothCommunication communication = new BluetoothCommunication("COM0"))
+        //using (NetworkCommunication communication = new NetworkCommunication("0.0.0.0"))
+        using (UsbCommunication communication = new UsbCommunication())
+        using (MindstormsClient<UsbCommunication> client = new MindstormsClient<UsbCommunication>(communication))
         {
-            Console.WriteLine("Opening connection to Mindstorms EV3 brick using USB...");
-            ICommunication communication = new UsbCommunication();
-            //ICommunication communication = new Brick(new BluetoothCommunication("COM0"));
-            //ICommunication communication = new Brick(new NetworkCommunication("0.0.0.0"));
-
-            Brick brick = new Brick(communication, true);
-
             Console.WriteLine("Connecting...");
-            await brick.ConnectAsync();
+            await client.ConnectAsync();
 
             Console.WriteLine("Connected...Turning motor...");
-            await brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.A, 50, 3000u, false);
+            await client.TurnMotorAtPowerForTimeAsync(OutputPort.A, 50, 3000u, false);
 
             System.Console.WriteLine("Motor turned...beeping...");
-            await brick.DirectCommand.PlayToneAsync(50, 5000, 500);
-
-            System.Console.WriteLine("Done...");
+            await client.PlayToneAsync(50, 5000, 500);
         }
+
+        System.Console.WriteLine("Done...");
     }
 }

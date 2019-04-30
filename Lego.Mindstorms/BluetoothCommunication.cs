@@ -10,8 +10,8 @@ namespace Lego.Mindstorms
 	/// <summary>
 	/// Communicate to EV3 brick over Bluetooth
 	/// </summary>
-	public class BluetoothCommunication : ICommunication
-	{
+	public class BluetoothCommunication : ICommunication, IDisposable
+    {
 		/// <summary>
 		/// Event fired when a complete report is received from the EV3 brick.
 		/// </summary>
@@ -58,7 +58,7 @@ namespace Lego.Mindstorms
 		/// <summary>
 		/// Disconnect from the EV3 brick.
 		/// </summary>
-		public void Disconnect()
+		public void Dispose()
 		{
 			if(_serialPort != null)
 			{
