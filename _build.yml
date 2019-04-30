@@ -1,0 +1,7 @@
+pool:
+  vmImage: 'Ubuntu-16.04'
+steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: pack
+      packagesToPack: 'Lego.Mindstorms.Client/Lego.Mindstorms.Client.csproj'
