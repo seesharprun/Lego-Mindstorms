@@ -2,8 +2,15 @@ name: '1.0.$(Rev:rrr)'
 pool:
   vmImage: 'Ubuntu-16.04'
 steps:
-  - task: NuGetCommand@2
+  - task: DotNetCoreCLI@2
+    displayName: 'Package Library'
     inputs:
-      command: pack
-      packagesToPack: 'Lego.Mindstorms/Lego.Mindstorms.csproj'
-      versioningScheme: byBuildNumber
+      command: pack      
+      projects: 'Lego.Mindstorms/Lego.Mindstorms.csproj'
+      arguments: '-p:PackageVersion=$(Build.BuildNumber) --version-suffix "prerelease"'      
+      packDirectory: '$(Build.ArtifactStagingDirectory)/nupkg'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Package'
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/nupkg'
+      artifactName: 'NuGet Packages'
