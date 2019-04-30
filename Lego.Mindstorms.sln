@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lego.Mindstorms", "Lego.Mindstorms\Lego.Mindstorms.csproj", "{2381739F-EC9A-46D9-8FBB-8CC1467EE5E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lego.Mindstorms.Client", "Lego.Mindstorms.Client\Lego.Mindstorms.Client.csproj", "{692E8B6D-FC06-43FF-A520-22395AE51EA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2381739F-EC9A-46D9-8FBB-8CC1467EE5E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2381739F-EC9A-46D9-8FBB-8CC1467EE5E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2381739F-EC9A-46D9-8FBB-8CC1467EE5E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2381739F-EC9A-46D9-8FBB-8CC1467EE5E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{692E8B6D-FC06-43FF-A520-22395AE51EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{692E8B6D-FC06-43FF-A520-22395AE51EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{692E8B6D-FC06-43FF-A520-22395AE51EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{692E8B6D-FC06-43FF-A520-22395AE51EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86282678-5F0F-4CF4-B584-965D7AF3B5C9}
+	EndGlobalSection
+EndGlobal
